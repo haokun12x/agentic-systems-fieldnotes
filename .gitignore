@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+node_modules/
+*.tar.gz
+*.zip
+!dist/assets/runtime-kernel.zip
+.env
+.env.*
+
+# Checkout-local hosting configuration and environments
+.openai/
+.pixi/
