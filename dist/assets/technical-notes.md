@@ -20,7 +20,7 @@ A trusted request context identifies the tenant, employee, workload, department,
 
 Authorization combines roles, resource attributes, and relationships. A finance role may permit a category of operation, while a project relationship controls the specific contract and classification controls disclosure. Delegated authority is the intersection of the employee, delegation, agent, workload, resource policy, and environment. Calling a more privileged agent must not silently expand that intersection.
 
-An `authz_epoch` changes when project membership or another relevant grant changes. Revocation propagates to retrieval, summaries, caches, and pending work. Ordinary read propagation has a proposed P99 target of 60 seconds. Sensitive exports and real business submissions check authoritative authorization at commit time. 
+An `authz_epoch` changes when project membership or another relevant grant changes. Revocation propagates to retrieval, summaries, caches, and pending work. Ordinary read propagation has a proposed P99 target of 60 seconds. Sensitive exports and real business submissions check authoritative authorization at commit time.
 ## 02 — Cross-department data becomes a product
 
 Departments retain authoritative ownership of contracts, procurement, payment, acceptance, and maintenance records. A data product adds a named owner, versioned schema, business definitions, freshness, permitted fields, query limits, and failure semantics. A cross-department answer composes these products rather than copying every department database into a shared model context.
