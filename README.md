@@ -13,6 +13,9 @@ Open `http://localhost:8766`. Edit module markup in `src/sections/`, run the ass
 
 ## Main experiences
 
+- **Positioning:** source-linked comparisons with Dify, LangChain, LangGraph, Codex, Claude Code, Pi, and the harness role; integration choices and enterprise operating-contract ownership.
+- **Agent strategies:** definitions and constructive mappings for ReAct, Plan-and-Execute, Reflexion, Tree of Thoughts, LATS, RAG, delegation, and human review. Switch backend routes and compose a review boundary; current primitives and controller extensions are labeled.
+
 - **Adaptive Agent loop:** five query trajectories; optional todos and delegation; weak results and structured errors return to the model for another decision. Department resources and four model configuration choices are explained separately.
 - **Backend routes:** switch between LangGraph and Rust, map shared Agent requirements to each, and inspect bounded fan-out, worker-loss recovery, and uncertain external effects. The executable Rust kernel is the foundation for the full custom service.
 - **Workspaces:** state, thread disk, and read-only knowledge routes; lifecycle events; the concrete state-to-disk PDF export bridge; explicit reflection versus private model reasoning.
@@ -27,8 +30,8 @@ See [implementation notes](dist/assets/implementation-notes.md) for the audited 
 
 ## Files
 
-- `src/sections/{journey,backends,workspaces,cases,control,protocol}.html`: primary implementation sections.
-- `dist/{journey,backends,workspaces,cases,control,protocol}.{js,css}`: independent browser interactions and styling.
+- `src/sections/{landscape,journey,backends,workspaces,cases,control,protocol}.html`: primary implementation sections.
+- `dist/{landscape,journey,backends,workspaces,cases,control,protocol}.{js,css}`: independent browser interactions and styling.
 - `dist/index.html`, `atlas.css`, `fieldguide.js`: page composition, shared design, and expandable reference navigation.
 - `src/sections/mechanisms.html`, `dist/mechanisms.*`, `app.js`, `runtime.*`: optional engineering reference.
 - `scripts/assemble-atlas.py`: deterministic assembly with duplicate-ID checks.

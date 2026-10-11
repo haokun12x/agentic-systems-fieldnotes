@@ -4,7 +4,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 
 ROOT = Path(__file__).resolve().parent.parent
-MODULES = ('journey', 'backends', 'workspaces', 'cases', 'control', 'protocol')
+MODULES = ('landscape', 'journey', 'backends', 'workspaces', 'cases', 'control', 'protocol')
 START, END = '<!-- INTERACTIVE_ATLAS_START -->', '<!-- INTERACTIVE_ATLAS_END -->'
 
 class IdCheck(HTMLParser):

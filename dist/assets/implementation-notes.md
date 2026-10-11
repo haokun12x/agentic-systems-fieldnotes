@@ -2,6 +2,12 @@
 
 Reviewed 2026-10-11. This public brief describes an inspected application and its pinned dependencies without publishing its private repository, endpoints, credentials, or production data. Browser scenarios are synthetic reconstructions of code contracts, not recorded production runs. This is a source review, not a live deployment certification.
 
+## Positioning and strategy composition
+
+The framework owns the enterprise operating contract around Agent strategies and runtime adapters. See [positioning notes](./positioning-notes.md) for source-linked comparisons with Dify, LangChain, LangGraph, Codex, Claude Code, Pi, and the harness role, and constructive mappings of ReAct, Plan-and-Execute, Reflexion, ToT, LATS, RAG, delegation, and human review.
+
+The mapping identifies required state, policy, actions, evaluators, and execution invariants. Existing primitives and additional controller implementations are marked separately; no comparative performance result is claimed.
+
 ## Backend implementation routes
 
 The system architecture is expressed as contracts: authorized context, adaptive model/tool decisions, observations, optional planning and delegation, scoped state/workspaces, recovery, and streamed user-facing output. LangGraph is one supported backend route and is used by the inspected application. A custom Rust runtime can implement the same requirements, while providing workload-specific execution and resource policies.
