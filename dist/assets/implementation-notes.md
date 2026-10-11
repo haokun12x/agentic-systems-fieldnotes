@@ -2,6 +2,14 @@
 
 Reviewed 2026-10-11. This public brief describes an inspected application and its pinned dependencies without publishing its private repository, endpoints, credentials, or production data. Browser scenarios are synthetic reconstructions of code contracts, not recorded production runs. This is a source review, not a live deployment certification.
 
+## Backend implementation routes
+
+The system architecture is expressed as contracts: authorized context, adaptive model/tool decisions, observations, optional planning and delegation, scoped state/workspaces, recovery, and streamed user-facing output. LangGraph is one supported backend route and is used by the inspected application. A custom Rust runtime can implement the same requirements, while providing workload-specific execution and resource policies.
+
+The Rust route maps those requirements to model clients, a typed action/tool registry, scoped storage adapters, versioned continuations, and transport. For more demanding scenarios it can add bounded asynchronous fan-out, tenant admission budgets, durable commits, worker leases/fencing, and reconciliation of uncertain external effects. These guarantees depend on their implementation and validation in either route.
+
+The included executable Rust kernel establishes selected execution semantics: typed dispatch, shared snapshots, reducers, checkpoint compatibility, bounded cycles, and an uncertainty ledger. A complete service adds the adaptive model loop, real clients, durable storage, asynchronous workers, and UI transport. To retain the current React SDK, its Rust transport adapter must implement the expected thread/run, messages/values, cancellation, and error contracts; a custom API requires a corresponding frontend adapter.
+
 ## 1. What drives the Agent
 
 The application constructs one Deep Agent from a model connection, orchestrator and delegation instructions, registered tools, a composite file backend, and a custom transcription-processing subagent. Deep Agents 0.2.8 supplies planning, filesystem, general-purpose delegation, and context-management middleware. The checked lockfile also pins LangChain 1.3.13 and LangGraph 1.2.9.
@@ -61,13 +69,13 @@ Cross-department coordination is likewise an extension: request separately autho
 
 **Application software:** the observed container uses Ubuntu and packages Python, Node, converters, and native dependencies. Containers package user space; Kubernetes manages deployment and capacity. A musl-linked native helper can run without a container when its CPU ISA, Linux kernel requirements, dependencies, and operational controls match. musl is not an ISA translator, NPU driver, or a replacement for the application's Python/Node ecosystem. Kubernetes manifests, a musl build of the full application, ARM validation, and Ascend integration are not verified deliverables of the inspected source.
 
-## 6. Runtime packets and frontend separation
+## 6. LangGraph-route packets and frontend separation
 
 The UI uses LangGraph SDK `useStream` with message, todo, file, and optional UI state. Submission sends a human message, optional file changes, and run configuration. The initial `/threads/{thread_id}/runs/stream` request is a POST that returns SSE; it is not a custom 202-then-GET handshake.
 
 Message chunks are assembled into assistant output. Tool calls carry names and arguments; ToolMessage results are matched by `tool_call_id`. Values updates feed todo and file panels. A delivered tool result is not automatically a successful business operation. The proxy forwards the upstream stream; it is not a separate sanitizer or event projector.
 
-The SDK supports joining an existing run, and the proxy forwards Last-Event-ID. That does not establish an application-owned, gap-free replay log with a custom sequence number and retention contract. The old reference event envelope, outbox, and durable Rust executor remain optional design examples, clearly separated from current application behavior.
+The SDK supports joining an existing run, and the proxy forwards Last-Event-ID. That does not establish an application-owned, gap-free replay log with a custom sequence number and retention contract. The optional event envelope and outbox are design extensions. The executable Rust kernel is the foundation of an alternative backend route, with full-service integration distinguished from its implemented semantics.
 
 ## Public technical references
 

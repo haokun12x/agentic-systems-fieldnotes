@@ -4,7 +4,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 
 ROOT = Path(__file__).resolve().parent.parent
-MODULES = ('journey', 'workspaces', 'cases', 'control', 'protocol')
+MODULES = ('journey', 'backends', 'workspaces', 'cases', 'control', 'protocol')
 START, END = '<!-- INTERACTIVE_ATLAS_START -->', '<!-- INTERACTIVE_ATLAS_END -->'
 
 class IdCheck(HTMLParser):
@@ -41,4 +41,4 @@ for name in (*MODULES, 'mechanisms'):
         text = text.replace('</head>', css + '\n' + js + '\n</head>')
 IdCheck().feed(text)
 page.write_text(text)
-print('Assembled 5 implementation sections and the reference atlas; HTML IDs are unique.')
+print(f'Assembled {len(MODULES)} main modules and the reference atlas; HTML IDs are unique.')
