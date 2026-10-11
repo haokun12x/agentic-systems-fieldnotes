@@ -1,0 +1,32 @@
+<section id="mechanisms" class="mech-section" aria-labelledby="mech-heading">
+  <div class="shell mech-shell">
+    <div class="mech-kicker"><span>02 / MECHANISM ATLAS</span><span>CHANGE AN INPUT. INSPECT THE CONSEQUENCE.</span></div>
+    <div class="mech-heading-row"><h2 id="mech-heading">Open the <em>black box.</em></h2><p>Eight mechanisms that make an agent system operable. Explore the data paths, change the constraints, and see which guarantees must hold.</p></div>
+    <div class="mech-app" id="mech-app" hidden>
+      <div class="mech-tabs" role="tablist" aria-label="Core system mechanisms">
+        <button id="mech-tab-query" role="tab" aria-selected="true" aria-controls="mech-panel" data-mech="query"><span>01</span> Query & retrieval</button>
+        <button id="mech-tab-collaboration" role="tab" aria-selected="false" aria-controls="mech-panel" tabindex="-1" data-mech="collaboration"><span>02</span> Multi-user state</button>
+        <button id="mech-tab-departments" role="tab" aria-selected="false" aria-controls="mech-panel" tabindex="-1" data-mech="departments"><span>03</span> Across departments</button>
+        <button id="mech-tab-resilience" role="tab" aria-selected="false" aria-controls="mech-panel" tabindex="-1" data-mech="resilience"><span>04</span> Authority & recovery</button>
+        <button id="mech-tab-threads" role="tab" aria-selected="false" aria-controls="mech-panel" tabindex="-1" data-mech="threads"><span>05</span> Concurrent execution</button>
+        <button id="mech-tab-kv" role="tab" aria-selected="false" aria-controls="mech-panel" tabindex="-1" data-mech="kv"><span>06</span> Inside the KV cache</button>
+        <button id="mech-tab-scheduling" role="tab" aria-selected="false" aria-controls="mech-panel" tabindex="-1" data-mech="scheduling"><span>07</span> Cache-aware routing</button>
+        <button id="mech-tab-operators" role="tab" aria-selected="false" aria-controls="mech-panel" tabindex="-1" data-mech="operators"><span>08</span> Hardware & operators</button>
+      </div>
+      <div id="mech-panel" class="mech-panel" role="tabpanel" aria-labelledby="mech-tab-query" tabindex="0">
+        <div class="mech-panel-heading"><div><span class="mech-overline" id="mech-category"></span><h3 id="mech-title"></h3></div><span class="mech-simulation-label">INTERACTIVE MODEL · ILLUSTRATIVE DATA</span></div>
+        <p id="mech-description" class="mech-description"></p>
+        <div id="mech-controls" class="mech-controls"></div>
+        <div class="mech-diagram-scroll" tabindex="0" role="region" aria-label="Interactive mechanism diagram; scroll horizontally on small screens"><div id="mech-diagram" class="mech-diagram"></div></div>
+        <div class="mech-state" aria-live="polite" aria-atomic="true"><span class="mech-state-dot" aria-hidden="true"></span><p id="mech-state-text"></p></div>
+        <div id="mech-metrics" class="mech-metrics"></div>
+        <div class="mech-notes"><div><span class="mech-overline">UNDER THE HOOD</span><p id="mech-detail"></p></div><div class="mech-invariant"><span class="mech-overline">THE INVARIANT</span><p id="mech-invariant"></p></div></div>
+        <div class="mech-sources"><span>ENGINEERING REFERENCES</span><div id="mech-sources"></div></div>
+      </div>
+    </div>
+    <noscript><div class="mech-static">
+      <p>Enable JavaScript to explore the diagrams. The operating principles:</p>
+      <ol><li><strong>Query:</strong> authenticate, restrict retrieval to authorized rows and chunks, combine lexical and semantic search, rerank, and attach evidence.</li><li><strong>Multi-user:</strong> isolate private contexts; collaborate through a versioned workspace with role checks and explicit conflict resolution.</li><li><strong>Cross-department:</strong> join approved data products for a declared purpose, keeping source policies and provenance intact.</li><li><strong>Authority and recovery:</strong> authorize every effect; checkpoint state, bound retries, and reconcile uncertain external outcomes by idempotency key.</li><li><strong>Concurrency:</strong> run independent tasks within a bounded worker pool and join their immutable outputs before committing shared state.</li><li><strong>KV cache:</strong> store per-layer key and value tensors. At decode, project the current token, append its K/V, attend to history including that token, then predict the next token. Reuse requires matching model, tokens, positions, and a permitted trust boundary.</li><li><strong>Scheduling:</strong> combine fair tenant queues, memory admission, prefix locality, and estimated wait time.</li><li><strong>Operators:</strong> validate the graph, lower supported operations, select fusion and tiling, run device kernels, and compare quality and performance with a reference.</li></ol>
+    </div></noscript>
+  </div>
+</section>
