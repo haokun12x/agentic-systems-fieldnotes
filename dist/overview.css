@@ -94,3 +94,5 @@
   .ov-bar{padding:12px 16px;flex-wrap:wrap}
 }
 @media(prefers-reduced-motion:reduce){.ov-node,.ov-guide>a{transition:none}.ov-wire-loop.is-lit{animation:none}}
+
+.ov-guide-note a{text-decoration:underline;text-underline-offset:3px}
