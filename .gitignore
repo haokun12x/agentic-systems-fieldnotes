@@ -6,7 +6,4 @@ node_modules/
 !dist/assets/runtime-kernel.zip
 .env
 .env.*
-
-# Checkout-local hosting configuration and environments
-.openai/
-.pixi/
+scripts/video/stills/

@@ -9,7 +9,31 @@ python -m http.server 8766 --directory dist
 python scripts/assemble-atlas.py
 ```
 
-Open `http://localhost:8766`. Edit module markup in `src/sections/`, run the assembler, and commit both fragments and `dist/index.html`. CSS and JavaScript are served directly from `dist/`; no Node build, backend, database, API key, or CDN dependency is required. Asset URLs work at a domain root or GitHub repository subpath.
+Open `http://localhost:8766`. Edit module markup in `src/sections/`, run the assembler, and commit both fragments and `dist/index.html`. The assembler sets the reading order, inserts part dividers' fragments, and adds a "next chapter" link after each numbered chapter. CSS and JavaScript are served directly from `dist/`; no Node build, backend, database, API key, or CDN dependency is required. Asset URLs work at a domain root or GitHub repository subpath.
+
+## Reading order
+
+The page is organized so a newcomer can start from the big picture and drill down:
+
+- **00 · The system at a glance:** a 71-second explainer video (with transcript) and an interactive system map that follows one request through six stops, each linking to the chapter that explains it.
+- **Part I · How it behaves:** 01 The Agent loop · 02 Six real use cases.
+- **Part II · How it’s built:** 03 Files & storage · 04 Access & routing · 05 What crosses the wire.
+- **Part III · Design choices:** 06 Backend routes · 07 Agent strategies · 08 Deployment compatibility · 09 Where it fits.
+- **Optional reference labs:** the broader mechanism atlas, failure lab, theory, and the Rust kernel.
+
+Every chapter opens with an “In plain terms” summary. A reading-progress bar, part-aware header navigation, and a floating contents menu keep the reader oriented.
+
+## Explainer video
+
+`dist/assets/explainer.mp4` and its poster are rendered from `scripts/video/explainer.html`, a CSS-animated 1280×720 scene file whose animation delays are absolute video times. To change the video, edit that file (open it in a browser to preview in real time), then:
+
+```sh
+pip install playwright imageio-ffmpeg && playwright install chromium
+python scripts/render-video.py --stills 3 30 60   # optional: preview frames
+python scripts/render-video.py                    # renders 2,130 frames → MP4 + poster
+```
+
+Rendering seeks every CSS animation to each frame time, so output is deterministic.
 
 ## Main experiences
 
@@ -30,11 +54,14 @@ See [implementation notes](dist/assets/implementation-notes.md) for the audited 
 
 ## Files
 
-- `src/sections/{landscape,journey,backends,workspaces,cases,control,protocol}.html`: primary implementation sections.
-- `dist/{landscape,journey,backends,workspaces,cases,control,protocol}.{js,css}`: independent browser interactions and styling.
+- `src/sections/overview.html`, `dist/overview.{js,css}`: the at-a-glance section, video embed, and interactive system map.
+- `src/sections/{journey,cases,workspaces,control,protocol,backends,patterns,compatibility,landscape}.html`: the nine numbered chapters; `part-{1,2,3}.html`: part dividers.
+- `dist/{landscape,journey,backends,workspaces,cases,control,protocol}.{js,css}`: independent browser interactions and styling (`landscape.*` also drives the strategies chapter; `workspaces.*` also drives compatibility).
+- `dist/guide.{js,css}`: reading structure — part dividers, plain-language summaries, next-chapter links, progress bar, active part navigation, floating contents menu.
 - `dist/index.html`, `atlas.css`, `fieldguide.js`: page composition, shared design, and expandable reference navigation.
+- `scripts/video/explainer.html`, `scripts/render-video.py`: explainer video source and renderer.
 - `src/sections/mechanisms.html`, `dist/mechanisms.*`, `app.js`, `runtime.*`: optional engineering reference.
-- `scripts/assemble-atlas.py`: deterministic assembly with duplicate-ID checks.
+- `scripts/assemble-atlas.py`: deterministic assembly (reading order, next-chapter links, asset tags) with duplicate-ID checks.
 - `.github/workflows/pages.yml`: GitHub Pages deployment from `dist/` on `main`.
 
 ## Publication

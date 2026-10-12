@@ -1,0 +1,64 @@
+<section id="overview" class="ov-section shell" aria-labelledby="ov-title">
+  <div class="ov-kicker"><span>00 / THE SYSTEM AT A GLANCE</span><span>WATCH THE TOUR · THEN FOLLOW ONE REQUEST</span></div>
+  <div class="ov-heading"><h2 id="ov-title">One question.<br><em>Six stops to an answer.</em></h2><p>Before the details: this is the whole system in one picture. A question passes an access check, picks up its department’s scope, runs through the Agent loop, leaves files in the right store, and streams back to the screen. Every later chapter zooms into one of these stops.</p></div>
+  <div class="ov-intro">
+    <figure class="ov-video">
+      <video id="ov-video" controls preload="metadata" playsinline poster="./assets/explainer-poster.jpg" aria-describedby="ov-video-caption">
+        <source src="./assets/explainer.mp4" type="video/mp4">
+        Your browser cannot play this video. <a href="./assets/explainer.mp4" download>Download the explainer (MP4)</a>.
+      </video>
+      <figcaption id="ov-video-caption"><span>VIDEO · 71 SECONDS · NO SOUND NEEDED</span>A guided tour of the request path, with on-screen captions.</figcaption>
+      <details class="ov-transcript"><summary>Read the transcript</summary><ol>
+        <li><strong>A request arrives.</strong> An employee asks, “What does the travel policy say about approval?” A proxy checks the origin, the department credential, the browser identity and thread ownership. The model cannot talk its way past these checks.</li>
+        <li><strong>Scope the context.</strong> The department selects a backend, its curated knowledge, its upload workspace and the shared tool list. The model only sees what is in scope.</li>
+        <li><strong>The Agent loop.</strong> The model picks a tool, reads the result and decides again. A weak search result leads to a refined query; a strong source is read and cited. The loop ends when the evidence is sufficient or a clear gap is reported.</li>
+        <li><strong>Three places for files.</strong> Drafts and reports live in conversation state, uploads are bytes on disk, and approved knowledge is read-only. Each has its own owner and lifetime.</li>
+        <li><strong>Stream the result.</strong> Messages, citations, files and task lists stream back as state, and the interface renders them. If no evidence exists, the answer says so.</li>
+        <li><strong>The architecture.</strong> Strategies such as ReAct, planning or reflection change how the Agent thinks. LangGraph or a custom Rust runtime changes how it runs. Scope, state, tools, recovery and delivery stay explicit.</li>
+      </ol></details>
+    </figure>
+    <nav class="ov-guide" aria-label="How this guide is organized">
+      <span class="ov-overline">HOW TO READ THIS GUIDE</span>
+      <a href="#part-behaviour"><b>I</b><span><strong>How it behaves</strong><small>The Agent loop step by step, then six real requests.</small></span><i>01–02</i></a>
+      <a href="#part-built"><b>II</b><span><strong>How it’s built</strong><small>Files and storage, access checks, and what crosses the wire.</small></span><i>03–05</i></a>
+      <a href="#part-choices"><b>III</b><span><strong>Design choices</strong><small>Backends, Agent strategies, deployment, and where it fits.</small></span><i>06–09</i></a>
+      <a href="#engineering-reference"><b>+</b><span><strong>Reference labs</strong><small>Optional deep dives: runtime kernel, failure lab, theory.</small></span><i>opt.</i></a>
+      <p class="ov-guide-note">New here? Watch the tour, click through the map below, then start with <a href="#request-lifecycle">chapter 01</a>.</p>
+    </nav>
+  </div>
+
+  <div id="ov-lab" class="ov-lab">
+    <div class="ov-bar"><span class="ov-bar-title"><i aria-hidden="true"></i> SYSTEM MAP / ONE REQUEST, END TO END</span><div class="ov-bar-actions"><button id="ov-play" type="button" aria-pressed="false">▶ Auto-tour</button><button id="ov-prev" type="button" aria-label="Previous stop">←</button><button id="ov-next" type="button" aria-label="Next stop">→</button></div></div>
+    <div class="ov-map" aria-label="System map. Select a stop to read what happens there.">
+      <svg class="ov-wires" viewBox="0 0 1200 480" preserveAspectRatio="none" aria-hidden="true">
+        <defs><marker id="ov-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 7 4 1 7" fill="none" stroke="context-stroke" stroke-width="1.4"/></marker></defs>
+        <rect class="ov-zone" x="646" y="26" width="268" height="300" rx="12"/>
+        <text class="ov-zone-label" x="660" y="50">AGENT LOOP · REPEATS UNTIL DONE</text>
+        <path class="ov-wire" data-ov-wire="access" d="M180 230H220" marker-end="url(#ov-arrow)"/>
+        <path class="ov-wire" data-ov-wire="scope" d="M390 230H430" marker-end="url(#ov-arrow)"/>
+        <path class="ov-wire" data-ov-wire="loop" d="M610 230H630V110H668" marker-end="url(#ov-arrow)"/>
+        <path class="ov-wire ov-wire-loop" data-ov-wire="loop" d="M860 150V208" marker-end="url(#ov-arrow)"/>
+        <path class="ov-wire ov-wire-loop" data-ov-wire="loop" d="M700 210V152" marker-end="url(#ov-arrow)"/>
+        <path class="ov-wire" data-ov-wire="store" d="M780 290V348" marker-end="url(#ov-arrow)"/>
+        <path class="ov-wire" data-ov-wire="deliver" d="M890 110H930V215H950" marker-end="url(#ov-arrow)"/>
+        <path class="ov-wire ov-wire-soft" data-ov-wire="deliver" d="M910 405H930V245H950" marker-end="url(#ov-arrow)"/>
+        <text class="ov-wire-label" x="868" y="184">call</text><text class="ov-wire-label" x="652" y="184">observe</text>
+        <text class="ov-wire-label" x="936" y="160">answer</text><text class="ov-wire-label" x="936" y="330">files</text>
+        <circle id="ov-packet" class="ov-packet" r="7" cx="100" cy="230"/>
+      </svg>
+      <button type="button" class="ov-node" data-ov-stop="0" style="--x:20;--y:170;--w:160;--h:120"><span>01 · BROWSER</span><strong>You ask</strong><small>message + thread</small></button>
+      <button type="button" class="ov-node" data-ov-stop="1" style="--x:220;--y:170;--w:170;--h:120"><span>02 · PROXY</span><strong>Access check</strong><small>origin · credential · owner</small></button>
+      <button type="button" class="ov-node" data-ov-stop="2" style="--x:430;--y:170;--w:180;--h:120"><span>03 · DEPARTMENT</span><strong>Scope</strong><small>backend · knowledge · tools</small></button>
+      <button type="button" class="ov-node ov-node-loop" data-ov-stop="3" style="--x:668;--y:66;--w:224;--h:84"><span>04 · MODEL ⇄ TOOLS</span><strong>Decide → act → observe</strong><small>model chooses the next step</small></button>
+      <div class="ov-node ov-node-tools" data-ov-part="3" style="--x:668;--y:210;--w:224;--h:80" aria-hidden="true"><span>TOOLS</span><strong>search · read · write</strong></div>
+      <button type="button" class="ov-node ov-node-store" data-ov-stop="4" style="--x:650;--y:350;--w:260;--h:110"><span>05 · STORAGE</span><strong>Three file stores</strong><small><em>{ } state</em> <em>▤ disk</em> <em>◇ read-only</em></small></button>
+      <button type="button" class="ov-node" data-ov-stop="5" style="--x:950;--y:170;--w:230;--h:120"><span>06 · INTERFACE</span><strong>Streamed answer</strong><small>chat · sources · files · tasks</small></button>
+    </div>
+    <div class="ov-inspector" aria-live="polite">
+      <div class="ov-inspect-main"><span id="ov-step-kicker" class="ov-overline">STOP 01 / 06 · BROWSER</span><h3 id="ov-step-title">You ask a question.</h3><p id="ov-step-body">An employee types a question in the chat. The browser sends it together with the conversation (thread) it belongs to.</p></div>
+      <div class="ov-inspect-side"><div class="ov-fail"><span class="ov-overline">IF SOMETHING GOES WRONG</span><p id="ov-step-fail">Nothing has left the browser yet; the draft message stays on screen.</p></div><a id="ov-step-link" class="ov-deeper" href="#protocol">Go deeper: <span>05 · What crosses the wire</span> →</a></div>
+    </div>
+    <div class="ov-dots" role="group" aria-label="Stops"><button type="button" data-ov-dot="0" aria-label="Stop 1: browser"></button><button type="button" data-ov-dot="1" aria-label="Stop 2: access check"></button><button type="button" data-ov-dot="2" aria-label="Stop 3: department scope"></button><button type="button" data-ov-dot="3" aria-label="Stop 4: Agent loop"></button><button type="button" data-ov-dot="4" aria-label="Stop 5: storage"></button><button type="button" data-ov-dot="5" aria-label="Stop 6: interface"></button></div>
+  </div>
+  <noscript><p class="ov-noscript">The request path: the browser sends a message; a proxy checks origin, department credential, browser identity and thread ownership; the department scopes backend, knowledge and tools; the model and tools loop until there is enough evidence; files land in state, disk or read-only knowledge; the result streams back to the interface.</p></noscript>
+</section>

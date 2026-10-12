@@ -1,6 +1,7 @@
 <section id="backend-routes" class="backend-section shell" aria-labelledby="backend-title">
-  <div class="backend-kicker"><span>SUPPORTED BACKEND IMPLEMENTATION ROUTES</span><span>ONE AGENT CONTRACT · MULTIPLE RUNTIMES</span></div>
+  <div class="backend-kicker"><span>06 / BACKEND ROUTES</span><span>ONE AGENT CONTRACT · MULTIPLE RUNTIMES</span></div>
   <div class="backend-heading"><h2 id="backend-title">LangGraph is one route.<br><em>Rust can carry the same system.</em></h2><p>The architecture requires scoped context, adaptive model decisions, tool execution, state, and a user-facing stream. LangGraph supplies one backend route. A custom Rust runtime can implement the same requirements and add precise control for more demanding operational scenarios.</p></div>
+    <p class="chapter-tldr"><span>IN PLAIN TERMS</span>The same Agent contracts can run on LangGraph — the route the inspected application uses today — or on a custom Rust runtime when a workload needs tighter control over capacity, recovery and side effects.</p>
   <div class="backend-shared" aria-label="Shared Agent contract"><span>AUTHORIZED CONTEXT</span><b aria-hidden="true">→</b><span>MODEL ⇄ TOOLS + OBSERVATIONS</span><b aria-hidden="true">→</b><span>STATE + USER INTERFACE</span><p>The model still chooses the next action. Backend selection chooses how that action is scheduled, stored, recovered, and delivered.</p></div>
   <div class="backend-lab">
     <div class="backend-tabs" role="tablist" aria-label="Select a backend implementation route">

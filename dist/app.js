@@ -467,25 +467,7 @@
       });
     }
 
-    if (!("IntersectionObserver" in window)) return;
-    const navigationLinks = [...document.querySelectorAll('nav a[href^="#"]')];
-    const targets = [...new Set(navigationLinks.map((link) => byId(link.getAttribute("href").slice(1))).filter(Boolean))];
-    const visible = new Map();
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) visible.set(entry.target.id, entry.intersectionRatio);
-        else visible.delete(entry.target.id);
-      });
-      const active = [...visible.entries()].sort((first, second) => second[1] - first[1])[0]?.[0];
-      if (!active) return;
-      navigationLinks.forEach((link) => {
-        const selected = link.getAttribute("href") === `#${active}`;
-        link.classList.toggle("is-active", selected);
-        if (selected) link.setAttribute("aria-current", "location");
-        else link.removeAttribute("aria-current");
-      });
-    }, { rootMargin: "-15% 0px -55% 0px", threshold: [0, 0.1, 0.3, 0.6] });
-    targets.forEach((target) => observer.observe(target));
+    // Active-section highlighting lives in guide.js.
   }
 
   function initializeReveals() {

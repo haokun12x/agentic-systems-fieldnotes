@@ -1,7 +1,8 @@
 <section id="workspaces" class="ws-section" aria-labelledby="ws-heading">
   <div class="shell">
-    <div class="ws-kicker"><span>WORKSPACE CONTRACT</span><span>OBSERVED IMPLEMENTATION · EXPLAINED AS A MODEL</span></div>
+    <div class="ws-kicker"><span>03 / FILES &amp; STORAGE</span><span>OBSERVED IMPLEMENTATION · EXPLAINED AS A MODEL</span></div>
     <div class="ws-heading-row"><h2 id="ws-heading">One workspace.<br><em>Three storage contracts.</em></h2><p>A draft can look like a file without being an OS file. The runtime routes virtual paths to conversation state, uploaded bytes, or curated knowledge. Each has a different owner, access path, and lifetime.</p></div>
+    <p class="chapter-tldr"><span>IN PLAIN TERMS</span>Files the Agent “sees” live in three different places: drafts in the conversation state, uploads on disk, and approved knowledge that is read-only. Each has a different owner and a different lifetime.</p>
     <div class="ws-lab" id="ws-lab">
       <div class="ws-toolbar"><div><span class="ws-badge">IMPLEMENTED PATTERN</span><h3>Follow a file through the boundary.</h3></div><span class="ws-small">Examples use synthetic content.</span></div>
       <div class="ws-route-tabs" role="group" aria-label="Choose a workspace operation">
@@ -29,21 +30,5 @@
       <div class="ws-boundary-list"><div><span>01 / IDENTITY</span><p>Workspace requests check department access and thread ownership before resolving a physical directory.</p></div><div><span>02 / EXECUTION</span><p>The examined agent does not expose an arbitrary shell. Controlled server adapters invoke tools such as Pandoc and ffmpeg with materialized files.</p></div><div><span>03 / ISOLATION</span><p>A virtual route is an application boundary. OS permissions, process isolation, credentials, and container controls are separate security layers.</p></div></div>
     </div>
     <div class="ws-sources"><span>REFERENCE CONTRACTS</span><a href="https://docs.langchain.com/oss/python/deepagents/backends" target="_blank" rel="noopener noreferrer">Deep Agents backends ↗</a><a href="https://docs.langchain.com/oss/python/langgraph/persistence" target="_blank" rel="noopener noreferrer">LangGraph persistence ↗</a></div>
-  </div>
-</section>
-<section id="compatibility" class="ws-section ws-compat-section" aria-labelledby="ws-compat-heading">
-  <div class="shell">
-    <div class="ws-kicker"><span>TWO LAYERS OF COMPATIBILITY</span><span>APPLICATION PORTABILITY + MODEL EXECUTION</span></div>
-    <div class="ws-heading-row"><h2 id="ws-compat-heading">Two contracts.<br><em>Two validation paths.</em></h2><p>Packaging the service does not port the model’s kernels. Adapting an accelerator does not make every Python extension or CLI binary portable. Validate both paths against the intended machine.</p></div>
-    <div class="ws-compat-controls"><label for="ws-software-target"><span>01 / Application deployment</span><select id="ws-software-target"><option value="container">Observed · Ubuntu + OCI container</option><option value="kubernetes">Design target · Kubernetes deployment</option><option value="musl">Design target · musl native helper</option></select></label><label for="ws-model-target"><span>02 / Model execution</span><select id="ws-model-target"><option value="endpoint">Observed · compatible HTTP endpoint</option><option value="ascend">Design target · Ascend / CANN backend</option></select></label></div>
-    <div class="ws-compat-diagram" id="ws-compat-diagram">
-      <div class="ws-compat-lane ws-software-lane"><div class="ws-lane-heading"><span class="ws-overline">A / SOFTWARE & OPERATING ENVIRONMENT</span><span id="ws-software-status" class="ws-badge">OBSERVED</span></div><div id="ws-software-flow" class="ws-compat-flow"></div><p id="ws-software-detail"></p><div class="ws-contract"><span>VALIDATE</span><strong id="ws-software-check"></strong></div></div>
-      <div class="ws-compat-separator"><span>HTTP / TYPED REQUEST CONTRACT</span><span aria-hidden="true">↓</span><span>INDEPENDENT DEPLOYMENT BOUNDARY</span></div>
-      <div class="ws-compat-lane ws-model-lane"><div class="ws-lane-heading"><span class="ws-overline">B / NEURAL NETWORK & ACCELERATOR</span><span id="ws-model-status" class="ws-badge">OBSERVED API BOUNDARY</span></div><div id="ws-model-flow" class="ws-compat-flow"></div><p id="ws-model-detail"></p><div class="ws-contract"><span>VALIDATE</span><strong id="ws-model-check"></strong></div></div>
-    </div>
-    <div class="ws-compat-conclusion" aria-live="polite"><span class="ws-overline">COMPATIBILITY RESULT</span><p id="ws-compat-result">The application package and model-serving backend have separate compatibility requirements.</p></div>
-    <div class="ws-compat-facts"><article><span>CONTAINERS</span><p>Package userspace and dependencies. They share a host kernel; CPU architecture still has to match, or use an explicit emulation strategy.</p></article><article><span>KUBERNETES</span><p>Schedules workloads and connects storage and devices. Manifests, persistent volumes, identity, and device integration need their own validation.</p></article><article><span>MUSL</span><p>Can support static linking for suitable native components. It does not translate instruction sets or automatically bundle a complete Python, Node, or accelerator stack.</p></article></div>
-    <div class="ws-sources"><span>PRIMARY REFERENCES</span><a href="https://docs.docker.com/build/building/multi-platform/" target="_blank" rel="noopener noreferrer">Docker platforms ↗</a><a href="https://kubernetes.io/docs/concepts/storage/volumes/" target="_blank" rel="noopener noreferrer">Kubernetes volumes ↗</a><a href="https://wiki.musl-libc.org/getting-started.html" target="_blank" rel="noopener noreferrer">musl toolchains ↗</a><a href="https://www.hiascend.com/cann/document" target="_blank" rel="noopener noreferrer">Ascend CANN ↗</a></div>
-    <noscript><p class="ws-lifecycle-note">The source examined contains a Python graph service, Node-based UI, Ubuntu container definitions, and HTTP model integration. Kubernetes manifests, musl native builds, and Ascend kernels are design targets here; they are not verified implementation claims.</p></noscript>
   </div>
 </section>

@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Systems Fieldnotes — explainer video source</title>
+<!--
+  Source for dist/assets/explainer.mp4. Every animation is a CSS animation whose
+  delay is an absolute time in the video, so scripts/render-video.py can seek the
+  whole page to any frame with document.getAnimations(). Open this file in a
+  browser to preview it in real time.
+-->
+<style>
+:root{--night:#0b1420;--panel:#122232;--panel2:#152b3c;--line:#29404f;--text:#e5edf3;--muted:#93a9ba;--teal:#64ddcc;--teal-deep:#153a40;--blue:#83afff;--amber:#f2b45a;--red:#ff7a6b;--paper:#f4f6f7;
+  --sans:"Noto Sans","Liberation Sans",Arial,sans-serif;--mono:"Liberation Mono",ui-monospace,monospace;--serif:"Liberation Serif",Georgia,serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;width:1280px;height:720px;overflow:hidden}
+.stage{position:relative;width:1280px;height:720px;overflow:hidden;background:var(--night);color:var(--text);font-family:var(--sans);
+  background-image:radial-gradient(#29445566 1px,transparent 1px);background-size:24px 24px}
+.mono{font-family:var(--mono)}
+em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--teal)}
+
+/* Chrome that persists through the whole video */
+.brand{position:absolute;left:48px;top:34px;display:flex;align-items:center;gap:12px;font:600 13px/1 var(--sans);letter-spacing:1.6px;z-index:5}
+.brand b{width:26px;height:26px;display:grid;place-items:center;background:var(--teal);color:var(--night);font-size:15px;border-radius:3px}
+.brand span{color:var(--muted);font-weight:400}
+.chapter{position:absolute;right:48px;top:36px;font:12px/1 var(--mono);letter-spacing:1.4px;color:var(--muted);z-index:5}
+.chapter span{position:absolute;right:0;white-space:nowrap;animation:win var(--l) var(--d) both linear}
+.bar{position:absolute;left:0;bottom:0;height:4px;width:100%;background:#ffffff14;z-index:5}
+.bar i{display:block;height:100%;width:100%;background:var(--teal);transform-origin:left;animation:grow 71s 0s both linear}
+
+/* Scenes: each is visible from --d for --l seconds */
+.scene{position:absolute;inset:0;animation:win var(--l) var(--d) both linear}
+.title-kicker{position:absolute;left:96px;top:118px;font:13px var(--mono);letter-spacing:2px;color:var(--teal)}
+.title-step{position:absolute;left:96px;top:104px;font:13px var(--mono);letter-spacing:2px;color:var(--teal)}
+.headline{position:absolute;left:96px;top:136px;font:500 46px/1.15 var(--sans);letter-spacing:-1.2px;max-width:1090px}
+.caption{position:absolute;left:96px;right:96px;bottom:46px;font:400 22px/1.45 var(--sans);color:#cfdbe4;min-height:64px}
+.caption span{position:absolute;left:0;right:0;bottom:0;animation:win var(--l) var(--d) both linear}
+.caption b{color:var(--teal);font-weight:600}
+
+/* Generic animated pieces */
+.in{animation:fadeUp .7s var(--d) both cubic-bezier(.2,.7,.2,1)}
+.pop{animation:pop .5s var(--d) both cubic-bezier(.2,.9,.3,1.3)}
+.win{animation:win var(--l) var(--d) both linear}
+.card{position:absolute;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.card .k{display:block;font:11px var(--mono);letter-spacing:1.4px;color:var(--muted);margin-bottom:8px}
+.card strong{display:block;font:500 21px/1.3 var(--sans)}
+.card small{display:block;margin-top:6px;font:13px/1.45 var(--mono);color:var(--muted)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+@keyframes win{0%{opacity:0}5%{opacity:1}95%{opacity:1}100%{opacity:0}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes glow{from{border-color:var(--line);background:var(--panel);box-shadow:none}to{border-color:var(--teal);background:var(--teal-deep);box-shadow:0 0 0 4px #64ddcc22,0 20px 50px -20px #64ddcc66}}
+@keyframes glowAmber{from{border-color:var(--line);box-shadow:none}to{border-color:var(--amber);box-shadow:0 0 0 4px #f2b45a22}}
+@keyframes type{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes draw{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+
+/* S1 — title */
+.s1 .big{position:absolute;left:96px;top:190px;font:500 76px/1.06 var(--sans);letter-spacing:-3px}
+.s1 .sub{position:absolute;left:100px;top:478px;font:20px/1.6 var(--sans);color:var(--muted);max-width:760px}
+.s1 .loopmark{position:absolute;right:90px;top:200px;width:360px;height:300px}
+
+/* S2 — access */
+.user-bubble{position:absolute;left:96px;top:250px;width:360px;background:var(--paper);color:#152534;border-radius:16px 16px 16px 4px;padding:20px 22px;font:500 20px/1.4 var(--sans)}
+.user-bubble small{display:block;font:11px var(--mono);letter-spacing:1.2px;color:#516575;margin-bottom:8px}
+.gates{position:absolute;left:530px;top:226px;width:650px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gate{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;height:150px;position:relative;animation:glow .4s var(--g) forwards}
+.gate .k{font:11px var(--mono);letter-spacing:1.2px;color:var(--muted)}
+.gate strong{display:block;margin-top:10px;font:500 17px/1.3 var(--sans)}
+.gate .pass{position:absolute;left:16px;bottom:14px;font:600 13px var(--mono);color:var(--teal);letter-spacing:1.5px;animation:pop .4s var(--g) both}
+.packet{position:absolute;width:18px;height:18px;border-radius:50%;background:var(--teal);box-shadow:0 0 22px var(--teal)}
+.s2 .packet{top:430px;left:0;animation:slide2 4.4s 7.2s both cubic-bezier(.5,0,.3,1)}
+@keyframes slide2{from{transform:translateX(270px);opacity:0}8%{opacity:1}to{transform:translateX(1130px);opacity:1}}
+.track{position:absolute;left:270px;top:438px;width:880px;height:2px;background:linear-gradient(90deg,#64ddcc55,#64ddcc11)}
+.verdict{position:absolute;left:530px;top:470px;font:15px var(--mono);color:var(--teal)}
+
+/* S3 — scope */
+.dept{position:absolute;left:96px;top:270px;width:300px;height:180px;animation:fadeUp .7s var(--d) both,glow .6s 16.4s forwards}
+.dept strong{font-size:26px}
+.scope-lines{position:absolute;left:396px;top:240px;overflow:visible}
+.scope-lines path{fill:none;stroke:var(--teal);stroke-width:2;stroke-dasharray:var(--len);animation:draw .8s var(--d) both ease-out;opacity:.7}
+.res{width:330px;height:84px;padding:13px 18px}
+.res strong{font-size:18px}
+
+/* S4 — loop */
+.loop-svg{position:absolute;left:70px;top:200px}
+.loop-svg .ring{fill:none;stroke:#2c4657;stroke-width:2;stroke-dasharray:6 8}
+.node{position:absolute;width:230px;padding:14px 16px;text-align:left;z-index:2}
+.node strong{font-size:18px}
+.n-model{left:200px;top:216px;animation:fadeUp .6s var(--d) both,glow .3s 24.6s forwards,glowOff .3s 25.8s forwards,glow .3s 29.7s forwards,glowOff .3s 30.6s forwards,glow .3s 34.6s forwards}
+.n-tool{left:430px;top:356px;animation:fadeUp .6s var(--d) both,glow .3s 26.2s forwards,glowOff .3s 27.4s forwards,glow .3s 31.1s forwards,glowOff .3s 32.3s forwards}
+.n-obs{left:200px;top:496px;animation:fadeUp .6s var(--d) both,glow .3s 27.5s forwards,glowOff .3s 29s forwards,glow .3s 32.4s forwards,glowOff .3s 33.9s forwards}
+@keyframes glowOff{from{border-color:var(--teal);background:var(--teal-deep);box-shadow:0 0 0 4px #64ddcc22}to{border-color:var(--line);background:var(--panel);box-shadow:none}}
+.log{position:absolute;left:720px;top:200px;width:470px;height:390px;background:#08111b;border:1px solid var(--line);border-radius:10px;padding:18px 20px;font:14px/1.5 var(--mono)}
+.log .lh{font-size:11px;letter-spacing:1.4px;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:12px;display:flex;justify-content:space-between}
+.log p{margin-bottom:11px;animation:fadeUp .4s var(--d) both}
+.log .t{color:var(--blue)}.log .o{color:var(--amber)}.log .g{color:var(--teal)}.log .m{color:#cfdbe4}
+.log .dim{color:var(--muted)}
+.exit{position:absolute;z-index:3;left:450px;top:216px;width:230px;padding:14px 16px;border-color:var(--teal);background:var(--teal-deep)}
+.mover{position:absolute;left:0;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--teal);box-shadow:0 0 20px var(--teal);
+  offset-path:path("M315 260 C 480 260 545 310 545 392 C 545 480 470 532 315 532 C 170 532 120 470 120 396 C 120 310 170 260 315 260");offset-rotate:0deg}
+.mv1{animation:lap 4.8s 25.2s both linear}
+.mv2{animation:lap 4.8s 30s both linear}
+@keyframes lap{0%{offset-distance:0%;opacity:0}4%{opacity:1}96%{opacity:1}100%{offset-distance:100%;opacity:0}}
+
+/* S5 — storage */
+.store{position:absolute;top:226px;width:340px;height:262px;padding:22px}
+.store .sym{font:26px var(--mono);color:var(--teal);margin-bottom:14px;display:block}
+.store code{display:block;font:15px var(--mono);color:var(--blue);margin:10px 0 14px}
+.store p{font:15px/1.5 var(--sans);color:#c3d1dc}
+.store .tag{position:absolute;right:18px;top:22px;font:11px var(--mono);letter-spacing:1.2px;border:1px solid currentColor;padding:4px 7px;border-radius:3px}
+.st-state .tag{color:var(--teal)}.st-disk .tag{color:var(--blue)}.st-know .tag{color:var(--amber)}
+.st-know .sym{color:var(--amber)}.st-disk .sym{color:var(--blue)}
+.reject{position:absolute;left:846px;top:504px;font:600 14px var(--mono);color:var(--red);letter-spacing:.5px}
+.st-know{animation:fadeUp .7s var(--d) both,glowAmber .3s 43.6s forwards}
+
+/* S6 — streaming UI */
+.browser{position:absolute;left:96px;top:214px;width:700px;height:356px;background:var(--paper);border-radius:12px;color:#152534;overflow:hidden}
+.browser .chrome{height:36px;background:#e2e9ec;display:flex;align-items:center;gap:7px;padding:0 14px}
+.browser .chrome i{width:10px;height:10px;border-radius:50%;background:#c5d0d6}
+.browser .chrome span{margin-left:14px;font:12px var(--mono);color:#516575}
+.chat{padding:20px 24px}
+.chat .q{margin-left:auto;width:max-content;max-width:420px;background:#152534;color:#fff;border-radius:14px 14px 4px 14px;padding:10px 14px;font:15px var(--sans)}
+.chat .a{margin-top:16px;font:16px/1.55 var(--sans);max-width:600px}
+.chat .a span{display:block;white-space:nowrap;animation:type 1.4s var(--d) both steps(40)}
+.chips{display:flex;gap:10px;margin-top:16px}
+.chip{font:12px var(--mono);border:1px solid #b9c9d1;border-radius:20px;padding:6px 11px;background:#fff}
+.chip.file{border-color:#007d79;color:#007d79}
+.todos{margin-top:16px;font:13px var(--mono);color:#516575}
+.todos div{margin-top:4px}
+.map{position:absolute;left:850px;top:240px;width:340px}
+.map div{border-left:2px solid var(--teal);padding:8px 0 8px 16px;margin-bottom:18px;font:14px var(--mono);color:#cfdbe4}
+.map div b{display:block;color:var(--teal);font-weight:400;font-size:12px;letter-spacing:1.2px;margin-bottom:4px}
+
+/* S7 — swappable */
+.contract{position:absolute;left:290px;top:312px;width:700px;height:100px;text-align:center;border-color:var(--teal);background:var(--teal-deep)}
+.contract strong{font-size:24px}
+.strats{position:absolute;left:96px;right:96px;top:244px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.strats span{font:13px var(--mono);border:1px solid #3a5a6b;border-radius:20px;padding:8px 14px;color:#cfdbe4;background:var(--panel)}
+.routes{position:absolute;left:290px;top:450px;width:700px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.routes .card{position:relative}
+.lbl{position:absolute;font:11px var(--mono);letter-spacing:1.4px;color:var(--muted)}
+
+/* S8 — closing */
+.s8 .big{position:absolute;left:96px;top:200px;font:500 64px/1.12 var(--sans);letter-spacing:-2.4px}
+.s8 .recap{position:absolute;left:96px;top:410px;display:flex;gap:10px}.s8 .recap span{font:13px var(--mono);letter-spacing:1px;color:#cfdbe4;border:1px solid #3a5a6b;border-radius:20px;padding:8px 14px;background:var(--panel)}
+.s8 .cta{position:absolute;left:100px;top:488px;font:18px var(--mono);color:var(--teal);letter-spacing:.5px}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="brand"><b>↗</b>SYSTEMS<span>&nbsp;/ FIELDNOTES</span></div>
+  <div class="chapter">
+    <span style="--d:5s;--l:9s">01 / 06 · ACCESS</span>
+    <span style="--d:14s;--l:9s">02 / 06 · SCOPE</span>
+    <span style="--d:23s;--l:15s">03 / 06 · AGENT LOOP</span>
+    <span style="--d:38s;--l:9s">04 / 06 · STORAGE</span>
+    <span style="--d:47s;--l:9s">05 / 06 · DELIVERY</span>
+    <span style="--d:56s;--l:9s">06 / 06 · ARCHITECTURE</span>
+  </div>
+  <div class="bar"><i></i></div>
+
+  <!-- S1 · 0–5s -->
+  <section class="scene s1" style="--d:0s;--l:5s">
+    <div class="title-kicker in" style="--d:.2s">A 70-SECOND TOUR OF AN ENTERPRISE AGENT</div>
+    <div class="big in" style="--d:.4s">How an AI Agent<br>does real work —<br><em>safely.</em></div>
+    <p class="sub in" style="--d:1.2s">Follow one question from the browser, through access checks and the Agent loop, to a cited answer.</p>
+    <svg class="loopmark in" style="--d:.8s" viewBox="-30 0 360 300" aria-hidden="true">
+      <circle cx="150" cy="150" r="118" fill="none" stroke="#2c4657" stroke-width="2" stroke-dasharray="6 8"/>
+      <circle cx="150" cy="150" r="70" fill="#153a40" stroke="#64ddcc" stroke-width="2"/>
+      <text x="150" y="146" text-anchor="middle" fill="#e5edf3" font-family="Noto Sans" font-size="17">decide</text>
+      <text x="150" y="168" text-anchor="middle" fill="#64ddcc" font-family="Liberation Mono" font-size="12">MODEL</text>
+      <g font-family="Liberation Mono" font-size="12" fill="#93a9ba" text-anchor="middle"><text x="150" y="20">ACT</text><text x="286" y="154">OBSERVE</text><text x="150" y="292">ADAPT</text><text x="18" y="154">ASK</text></g>
+    </svg>
+  </section>
+
+  <!-- S2 · 5–14s · access -->
+  <section class="scene s2" style="--d:5s;--l:9s">
+    <div class="title-step in" style="--d:5.2s">STEP 1 · A REQUEST ARRIVES</div>
+    <div class="headline in" style="--d:5.3s">Check <em>who is asking</em> before any AI runs.</div>
+    <div class="user-bubble in" style="--d:5.8s"><small>OFFICE EMPLOYEE · BROWSER</small>“What does the travel policy say about approval?”</div>
+    <div class="gates">
+      <div class="gate in" style="--d:6.2s;--g:7.9s"><span class="k">01</span><strong>Same origin</strong><span class="pass">PASS</span></div>
+      <div class="gate in" style="--d:6.35s;--g:8.8s"><span class="k">02</span><strong>Department credential</strong><span class="pass">PASS</span></div>
+      <div class="gate in" style="--d:6.5s;--g:9.7s"><span class="k">03</span><strong>Browser identity</strong><span class="pass">PASS</span></div>
+      <div class="gate in" style="--d:6.65s;--g:10.6s"><span class="k">04</span><strong>Owns this thread</strong><span class="pass">PASS</span></div>
+    </div>
+    <div class="track in" style="--d:7s"></div>
+    <div class="packet"></div>
+    <div class="verdict pop" style="--d:11.4s">→ forwarded to the Office department backend</div>
+    <div class="caption"><span style="--d:5.6s;--l:8.2s">A proxy checks the request first. <b>The model cannot talk its way past these checks</b> — it only sees the task once access is granted.</span></div>
+  </section>
+
+  <!-- S3 · 14–23s · scope -->
+  <section class="scene s3" style="--d:14s;--l:9s">
+    <div class="title-step in" style="--d:14.2s">STEP 2 · SCOPE THE CONTEXT</div>
+    <div class="headline in" style="--d:14.3s">The department decides <em>what is in reach.</em></div>
+    <div class="card dept" style="--d:14.8s"><span class="k">DEPARTMENT</span><strong>Office</strong><small>its own backend process,<br>knowledge root &amp; history</small></div>
+    <svg class="scope-lines" width="440" height="380" viewBox="0 0 440 380" aria-hidden="true">
+      <path d="M0 115 C 70 115 70 6 144 6" style="--len:200;--d:15.6s"/>
+      <path d="M0 118 C 70 118 70 102 144 102" style="--len:160;--d:15.8s"/>
+      <path d="M0 122 C 70 122 70 198 144 198" style="--len:180;--d:16s"/>
+      <path d="M0 125 C 70 125 70 294 144 294" style="--len:240;--d:16.2s"/>
+    </svg>
+    <div class="card res in" style="--d:16s;left:540px;top:204px"><span class="k">CONVERSATION</span><strong>This thread’s history</strong></div>
+    <div class="card res in" style="--d:16.4s;left:540px;top:300px"><span class="k">KNOWLEDGE · READ-ONLY</span><strong>/knowledge/ curated docs</strong></div>
+    <div class="card res in" style="--d:16.8s;left:540px;top:396px"><span class="k">WORKSPACE</span><strong>/workspace/ uploaded files</strong></div>
+    <div class="card res in" style="--d:17.2s;left:540px;top:492px"><span class="k">TOOLS</span><strong>search · read · write · ASR · export</strong></div>
+    <div class="lbl in" style="--d:17.8s;left:900px;top:250px;width:300px;line-height:1.7;font-size:13px;color:#cfdbe4">MODEL CONTEXT =<br><span style="color:var(--teal)">question + history<br>+ tool list + instructions</span></div>
+    <div class="caption"><span style="--d:14.6s;--l:8.2s">Choosing a department selects a backend, its knowledge and its files. <b>The model only sees what is in scope.</b></span></div>
+  </section>
+
+  <!-- S4 · 23–38s · loop -->
+  <section class="scene s4" style="--d:23s;--l:15s">
+    <div class="title-step in" style="--d:23.2s">STEP 3 · THE AGENT LOOP</div>
+    <div class="headline in" style="--d:23.3s">Act, observe, <em>decide again.</em></div>
+    <svg class="loop-svg in" style="--d:23.6s" width="560" height="420" viewBox="70 200 560 420" aria-hidden="true">
+      <path class="ring" d="M315 260 C 480 260 545 310 545 392 C 545 480 470 532 315 532 C 170 532 120 470 120 396 C 120 310 170 260 315 260"/>
+    </svg>
+    <div class="card node n-model" style="--d:23.6s"><span class="k">MODEL TURN</span><strong>Choose the next action</strong></div>
+    <div class="card node n-tool" style="--d:23.8s"><span class="k">TOOL CALL</span><strong>Run a registered tool</strong></div>
+    <div class="card node n-obs" style="--d:24s"><span class="k">OBSERVATION</span><strong>Read what came back</strong></div>
+    <div class="mover mv1"></div><div class="mover mv2"></div>
+    <div class="lbl in" style="--d:24.4s;left:40px;top:388px;width:120px;text-align:right;line-height:1.6;color:#cfdbe4">↺ new<br>evidence</div>
+    <div class="card exit pop" style="--d:35s"><span class="k" style="color:var(--teal)">LOOP EXIT</span><strong>Enough evidence → answer</strong></div>
+    <div class="log in" style="--d:24.2s">
+      <div class="lh"><span>ACTION HISTORY</span><span>ILLUSTRATIVE</span></div>
+      <p class="t" style="--d:25.8s">→ knowledge_search("travel approval")</p>
+      <p class="o" style="--d:27.4s">← 3 weak matches, none about approval</p>
+      <p class="m" style="--d:28.8s">· model: refine the query</p>
+      <p class="t" style="--d:30.8s">→ knowledge_search("approval threshold",<br>&nbsp;&nbsp;category: "policy")</p>
+      <p class="g" style="--d:32.2s">← /knowledge/travel-policy.md §4 — strong</p>
+      <p class="t" style="--d:33.2s">→ read_file("/knowledge/travel-policy.md")</p>
+      <p class="g" style="--d:35.2s">✓ no more tool calls → answer with citation</p>
+    </div>
+    <div class="caption">
+      <span style="--d:23.5s;--l:4.6s">The model doesn’t follow a fixed script. It <b>picks a tool</b> and gives it arguments…</span>
+      <span style="--d:28s;--l:4.4s">…<b>reads the result</b>, and decides again. A weak result changes the next query.</span>
+      <span style="--d:32.3s;--l:5.6s">When the evidence is good enough — or a tool reports a clear gap — <b>the loop ends</b>.</span>
+    </div>
+  </section>
+
+  <!-- S5 · 38–47s · storage -->
+  <section class="scene s5" style="--d:38s;--l:9s">
+    <div class="title-step in" style="--d:38.2s">STEP 4 · THREE PLACES FOR FILES</div>
+    <div class="headline in" style="--d:38.3s">One file API. <em>Three storage contracts.</em></div>
+    <div class="card store st-state in" style="--d:38.8s;left:96px"><span class="tag">STATE</span><span class="sym">{ }</span><strong>Drafts &amp; reports</strong><code>/plan.md · /final_report.md</code><p>Live in the conversation state. Saved with checkpoints, not as OS files.</p></div>
+    <div class="card store st-disk in" style="--d:39.4s;left:470px"><span class="tag">DISK</span><span class="sym">▤</span><strong>Uploads</strong><code>/workspace/input.pdf</code><p>Real bytes on disk, per department and thread. OCR and audio tools read them.</p></div>
+    <div class="card store st-know" style="--d:40s;left:844px"><span class="tag">READ-ONLY</span><span class="sym">◇</span><strong>Approved knowledge</strong><code>/knowledge/policy.md</code><p>The Agent can read it. Writes, edits and uploads are rejected.</p></div>
+    <div class="reject pop" style="--d:43.8s">✕ write_file → rejected: read-only</div>
+    <div class="caption"><span style="--d:38.6s;--l:8.2s">Files look alike to the Agent, but <b>each kind has its own owner and lifetime</b> — so drafts never overwrite evidence.</span></div>
+  </section>
+
+  <!-- S6 · 47–56s · delivery -->
+  <section class="scene s6" style="--d:47s;--l:9s">
+    <div class="title-step in" style="--d:47.2s">STEP 5 · STREAM THE RESULT</div>
+    <div class="headline in" style="--d:47.3s">State streams back. <em>The UI renders it.</em></div>
+    <div class="browser in" style="--d:47.6s">
+      <div class="chrome"><i></i><i></i><i></i><span>office · thread 7f3a</span></div>
+      <div class="chat">
+        <div class="q">What does the travel policy say about approval?</div>
+        <div class="a">
+          <span style="--d:48.6s">Trips above the threshold need written approval from</span>
+          <span style="--d:50s">a department head before booking (travel policy §4).</span>
+          <span style="--d:51.4s">Approvals are filed with the expense claim.</span>
+        </div>
+        <div class="chips"><span class="chip pop" style="--d:52.6s">source · travel-policy.md §4</span><span class="chip file pop" style="--d:53.2s">▤ final_report.md</span></div>
+        <div class="todos"><div class="in" style="--d:53.8s">☑ search policy &nbsp; ☑ read §4 &nbsp; ☑ answer</div></div>
+      </div>
+    </div>
+    <div class="map">
+      <div class="in" style="--d:48.4s"><b>messages</b>→ chat bubbles</div>
+      <div class="in" style="--d:52.6s"><b>citations</b>→ source chips</div>
+      <div class="in" style="--d:53.2s"><b>values.files</b>→ file preview</div>
+      <div class="in" style="--d:53.8s"><b>values.todos</b>→ task list</div>
+    </div>
+    <div class="caption"><span style="--d:47.6s;--l:8.2s">The answer arrives with its sources — or an <b>honest “I couldn’t find evidence”</b> instead of a guess.</span></div>
+  </section>
+
+  <!-- S7 · 56–65s · architecture -->
+  <section class="scene s7" style="--d:56s;--l:9s">
+    <div class="title-step in" style="--d:56.2s">THE ARCHITECTURE</div>
+    <div class="headline in" style="--d:56.3s">Swap the parts. <em>Keep the boundaries.</em></div>
+    <div class="lbl in" style="--d:57s;left:0;right:0;top:220px;text-align:center">HOW IT THINKS · STRATEGIES</div>
+    <div class="strats">
+      <span class="pop" style="--d:57.2s">ReAct</span><span class="pop" style="--d:57.4s">Plan-and-Execute</span><span class="pop" style="--d:57.6s">Reflexion</span><span class="pop" style="--d:57.8s">Tree of Thoughts</span><span class="pop" style="--d:58s">Agentic RAG</span><span class="pop" style="--d:58.2s">Multi-Agent</span><span class="pop" style="--d:58.4s">Human review</span>
+    </div>
+    <div class="card contract pop" style="--d:58.9s"><span class="k" style="color:var(--teal)">THE OPERATING CONTRACT</span><strong>scope · state · tools · recovery · delivery</strong></div>
+    <div class="lbl in" style="--d:59.6s;left:0;right:0;top:426px;text-align:center">HOW IT RUNS · BACKENDS</div>
+    <div class="routes">
+      <div class="card in" style="--d:59.8s"><span class="k">CURRENT ROUTE</span><strong>LangGraph runtime</strong><small>the inspected application</small></div>
+      <div class="card in" style="--d:60.2s"><span class="k">ALTERNATIVE ROUTE</span><strong>Custom Rust runtime</strong><small>tighter control under load</small></div>
+    </div>
+    <div class="caption"><span style="--d:56.6s;--l:8.2s">Strategies change <b>how it thinks</b>; backends change <b>how it runs</b>. Who may act, where data lives and how work recovers stay explicit.</span></div>
+  </section>
+
+  <!-- S8 · 65–71s · closing -->
+  <section class="scene s8" style="--d:65s;--l:6s">
+    <div class="big in" style="--d:65.3s">Authority before reasoning.<br><em>Evidence before answers.</em></div>
+    <div class="recap in" style="--d:66s"><span>01 Access</span><span>02 Scope</span><span>03 Loop</span><span>04 Storage</span><span>05 Delivery</span></div>
+    <div class="cta in" style="--d:66.6s">Explore every step interactively in the field guide ↓</div>
+  </section>
+</div>
+</body>
+</html>
